@@ -1,31 +1,53 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { Github, Twitter, Linkedin, Bot, Zap, Shield } from 'lucide-react';
+import { Bot, Gamepad2, Zap, Github, Twitter, Youtube, Mail } from 'lucide-react';
 import { useSmartNavigation } from '@/hooks/useSmartNavigation';
 
 const DEFAULT_FOOTER = {
-  brandName: 'RoboAI Gaming',
-  brandDescription: 'The Ultimate AI-Powered Robot Gaming Platform for Next-Gen Experiences',
-  companyLinks: [
-    { label: 'About', href: '/about' },
-    { label: 'Careers', href: '/careers' },
-  ],
-  legalLinks: [
-    { label: 'Privacy', href: '/privacy' },
-    { label: 'Terms', href: '/terms' },
+  logo: 'RoboGame AI',
+  logoHref: '/',
+  description: 'The ultimate super app for AI robot gaming. Build, battle, and dominate with intelligent robots.',
+  sections: [
+    {
+      title: 'Super App',
+      links: [
+        { label: 'Download App', href: '/download' },
+        { label: 'Play Now', href: '/play' },
+        { label: 'Features', href: '#features' },
+        { label: 'Tournaments', href: '/tournaments' },
+      ],
+    },
+    {
+      title: 'AI Robots',
+      links: [
+        { label: 'Build Robots', href: '/build' },
+        { label: 'AI Training', href: '/training' },
+        { label: 'Battle Arena', href: '/arena' },
+        { label: 'Leaderboards', href: '/leaderboards' },
+      ],
+    },
+    {
+      title: 'Community',
+      links: [
+        { label: 'Discord', href: 'https://discord.gg/robogame' },
+        { label: 'Forums', href: '/forums' },
+        { label: 'Support', href: '/support' },
+        { label: 'Blog', href: '/blog' },
+      ],
+    },
   ],
   socialLinks: [
-    { platform: 'GitHub', href: 'https://github.com', icon: 'github' },
-    { platform: 'Twitter', href: 'https://twitter.com', icon: 'twitter' },
-    { platform: 'LinkedIn', href: 'https://linkedin.com', icon: 'linkedin' },
+    { icon: 'Twitter', href: 'https://twitter.com/robogameai', label: 'Twitter' },
+    { icon: 'Youtube', href: 'https://youtube.com/robogameai', label: 'YouTube' },
+    { icon: 'Github', href: 'https://github.com/robogameai', label: 'GitHub' },
+    { icon: 'Mail', href: 'mailto:hello@robogameai.com', label: 'Email' },
   ],
-  copyrightText: '© 2024 RoboAI Gaming. All rights reserved.',
-  newsletterTitle: 'Stay Updated',
-  newsletterDescription: 'Get the latest updates on AI robot gaming technology',
-  newsletterPlaceholder: 'Enter your email',
-  newsletterButtonText: 'Subscribe',
+  copyright: '© 2024 RoboGame AI. All rights reserved.',
+  bottomLinks: [
+    { label: 'Privacy Policy', href: '/privacy' },
+    { label: 'Terms of Service', href: '/terms' },
+    { label: 'Cookie Policy', href: '/cookies' },
+  ],
 } as const;
 
 type FooterProps = Partial<typeof DEFAULT_FOOTER>;
@@ -34,147 +56,140 @@ export default function Footer(props: FooterProps) {
   const config = { ...DEFAULT_FOOTER, ...props };
   const navigate = useSmartNavigation();
 
-  const handleLinkClick = (href: string) => {
-    if (href.startsWith('http')) {
-      window.open(href, '_blank', 'noopener,noreferrer');
-    } else {
-      navigate(href);
-    }
+  const handleLogoClick = () => {
+    navigate(config.logoHref);
   };
 
-  const renderSocialIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'github':
-        return <Github className="h-5 w-5" />;
-      case 'twitter':
-        return <Twitter className="h-5 w-5" />;
-      case 'linkedin':
-        return <Linkedin className="h-5 w-5" />;
-      default:
-        return <Bot className="h-5 w-5" />;
-    }
+  const handleLinkClick = (href: string) => {
+    navigate(href);
+  };
+
+  const getSocialIcon = (iconName: string) => {
+    const icons = {
+      Twitter,
+      Youtube,
+      Github,
+      Mail,
+    };
+    const IconComponent = icons[iconName as keyof typeof icons] || Mail;
+    return <IconComponent className="h-5 w-5" />;
   };
 
   return (
-    <section id="footer" className="bg-card text-card-foreground border-t border-border">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+    <footer className="bg-background border-t border-border/50 relative overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-transparent" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-30" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl opacity-30" />
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Main Footer Content */}
-        <div className="grid gap-8 lg:grid-cols-4 md:grid-cols-2">
-          {/* Brand Section */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="bg-primary text-primary-foreground p-2 rounded-lg">
-                <Bot className="h-6 w-6" />
-              </div>
-              <h3 className="text-xl font-bold">
-                <span data-editable="brandName">{config.brandName}</span>
-              </h3>
-            </div>
-            <p className="text-muted-foreground mb-6 max-w-md">
-              <span data-editable="brandDescription">{config.brandDescription}</span>
-            </p>
-
-            {/* Newsletter Signup */}
-            <div className="bg-muted/50 p-4 rounded-lg border border-border">
-              <h4 className="font-semibold mb-2">
-                <span data-editable="newsletterTitle">{config.newsletterTitle}</span>
-              </h4>
-              <p className="text-sm text-muted-foreground mb-3">
-                <span data-editable="newsletterDescription">{config.newsletterDescription}</span>
+        <div className="py-16 lg:py-20">
+          <div className="grid gap-12 lg:grid-cols-4">
+            {/* Logo and Description */}
+            <div className="lg:col-span-1">
+              <button
+                onClick={handleLogoClick}
+                className="flex items-center gap-3 hover:opacity-80 transition-opacity group mb-6"
+              >
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-xl blur-sm opacity-50 group-hover:opacity-75 transition-opacity" />
+                  <div className="relative bg-gradient-to-r from-primary to-accent p-3 rounded-xl">
+                    <Bot className="h-7 w-7 text-white" />
+                  </div>
+                </div>
+                <span className="text-2xl font-black bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  <span data-editable="logo">{config.logo}</span>
+                </span>
+              </button>
+              
+              <p className="text-muted-foreground leading-relaxed mb-6 text-lg">
+                <span data-editable="description">{config.description}</span>
               </p>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  placeholder={config.newsletterPlaceholder}
-                  className="flex-1 px-3 py-2 bg-background border border-input rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-                />
-                <Button
-                  size="sm"
-                  className="bg-primary text-primary-foreground hover:bg-primary/90"
-                >
-                  <Zap className="h-4 w-4 mr-1" />
-                  <span data-editable="newsletterButtonText">{config.newsletterButtonText}</span>
-                </Button>
+              
+              {/* Super App Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-full">
+                <Zap className="h-4 w-4 text-primary" />
+                <span className="text-sm font-bold text-primary">Super App Technology</span>
               </div>
             </div>
-          </div>
 
-          {/* Company Links */}
-          <div>
-            <h4 className="font-semibold mb-4 flex items-center gap-2">
-              <Shield className="h-4 w-4 text-primary" />
-              Company
-            </h4>
-            <ul className="space-y-3">
-              {config.companyLinks.map((link, idx) => (
-                <li key={idx}>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-auto p-0 text-muted-foreground hover:text-foreground justify-start"
-                    onClick={() => handleLinkClick(link.href)}
-                    data-editable-href={`companyLinks[${idx}].href`}
-                    data-href={link.href}
-                  >
-                    <span data-editable={`companyLinks[${idx}].label`}>{link.label}</span>
-                  </Button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal Links */}
-          <div>
-            <h4 className="font-semibold mb-4">Legal</h4>
-            <ul className="space-y-3">
-              {config.legalLinks.map((link, idx) => (
-                <li key={idx}>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-auto p-0 text-muted-foreground hover:text-foreground justify-start"
-                    onClick={() => handleLinkClick(link.href)}
-                    data-editable-href={`legalLinks[${idx}].href`}
-                    data-href={link.href}
-                  >
-                    <span data-editable={`legalLinks[${idx}].label`}>{link.label}</span>
-                  </Button>
-                </li>
-              ))}
-            </ul>
+            {/* Footer Sections */}
+            <div className="lg:col-span-3">
+              <div className="grid gap-8 sm:grid-cols-3">
+                {config.sections.map((section, idx) => (
+                  <div key={idx}>
+                    <h3 className="text-lg font-bold text-foreground mb-6">
+                      <span data-editable={`sections[${idx}].title`}>{section.title}</span>
+                    </h3>
+                    <ul className="space-y-4">
+                      {section.links.map((link, linkIdx) => (
+                        <li key={linkIdx}>
+                          <button
+                            onClick={() => handleLinkClick(link.href)}
+                            className="text-muted-foreground hover:text-primary transition-colors font-medium"
+                          >
+                            <span data-editable={`sections[${idx}].links[${linkIdx}].label`}>
+                              {link.label}
+                            </span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-
-        <Separator className="my-8" />
 
         {/* Bottom Section */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-muted-foreground">
-            <span data-editable="copyrightText">{config.copyrightText}</span>
-          </p>
+        <div className="border-t border-border/50 py-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+            {/* Copyright */}
+            <div className="text-muted-foreground text-center lg:text-left">
+              <span data-editable="copyright">{config.copyright}</span>
+            </div>
 
-          {/* Social Links */}
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground hidden sm:block">Follow us:</span>
-            <div className="flex gap-2">
+            {/* Social Links */}
+            <div className="flex items-center gap-4">
               {config.socialLinks.map((social, idx) => (
-                <Button
+                <button
                   key={idx}
-                  variant="ghost"
-                  size="sm"
-                  className="h-9 w-9 p-0 text-muted-foreground hover:text-foreground hover:bg-accent"
                   onClick={() => handleLinkClick(social.href)}
-                  data-editable-href={`socialLinks[${idx}].href`}
-                  data-href={social.href}
-                  aria-label={social.platform}
+                  className="p-3 bg-card/60 hover:bg-primary/10 border border-border/50 hover:border-primary/30 rounded-xl transition-all duration-300 hover:scale-110 group"
+                  aria-label={social.label}
                 >
-                  {renderSocialIcon(social.icon)}
-                </Button>
+                  <div className="text-muted-foreground group-hover:text-primary transition-colors">
+                    {getSocialIcon(social.icon)}
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Bottom Links */}
+            <div className="flex items-center gap-6 text-sm">
+              {config.bottomLinks.map((link, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleLinkClick(link.href)}
+                  className="text-muted-foreground hover:text-primary transition-colors font-medium"
+                >
+                  <span data-editable={`bottomLinks[${idx}].label`}>{link.label}</span>
+                </button>
               ))}
             </div>
           </div>
         </div>
+
+        {/* Gaming Elements */}
+        <div className="absolute bottom-4 left-4 opacity-10">
+          <Gamepad2 className="h-8 w-8 text-primary" />
+        </div>
+        <div className="absolute top-4 right-4 opacity-10">
+          <Bot className="h-8 w-8 text-accent" />
+        </div>
       </div>
-    </section>
+    </footer>
   );
 }

@@ -3,28 +3,28 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Play, Zap, Users, Trophy } from 'lucide-react';
+import { Play, Zap, Users, Trophy, Bot, Gamepad2 } from 'lucide-react';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useSmartNavigation } from '@/hooks/useSmartNavigation';
 
 const DEFAULT_HERO = {
-  title: 'Build, Battle & Dominate with AI-Powered Robots',
+  title: 'The Ultimate AI Robot Game Super App',
   subtitle:
-    'Experience the future of gaming with RoboGame AI - where advanced artificial intelligence meets immersive robot combat. Create intelligent battle bots, train neural networks, and compete in dynamic arenas.',
-  ctaText: 'Start Building',
-  ctaHref: '/build',
+    'Experience the future of gaming with our revolutionary super app. Build, train, and battle with intelligent AI robots in immersive virtual arenas. Advanced machine learning meets cutting-edge gameplay.',
+  ctaText: 'Start Gaming Now',
+  ctaHref: '/play',
   secondaryCtaText: 'Watch Demo',
   secondaryCtaHref: '/demo',
   heroImageUrl:
-    'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=1200&h=800&random=robogame1',
-  heroImageAlt: 'AI robot in futuristic battle arena',
+    'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=1200&h=800&random=superapp1',
+  heroImageAlt: 'AI robot game super app interface',
   stats: [
-    { label: 'Active Players', value: '50K+', icon: 'Users' },
-    { label: 'Battles Won', value: '2M+', icon: 'Trophy' },
-    { label: 'AI Models', value: '500+', icon: 'Zap' },
+    { label: 'Active Gamers', value: '2M+', icon: 'Users' },
+    { label: 'AI Battles', value: '50M+', icon: 'Trophy' },
+    { label: 'Smart Robots', value: '10K+', icon: 'Bot' },
   ],
-  badgeText: 'Next-Gen Gaming',
+  badgeText: 'Super App Revolution',
 } as const;
 
 type HeroProps = Partial<typeof DEFAULT_HERO>;
@@ -57,8 +57,8 @@ export default function Hero(props: HeroProps) {
         return <Users className="w-5 h-5" />;
       case 'Trophy':
         return <Trophy className="w-5 h-5" />;
-      case 'Zap':
-        return <Zap className="w-5 h-5" />;
+      case 'Bot':
+        return <Bot className="w-5 h-5" />;
       default:
         return <Zap className="w-5 h-5" />;
     }
@@ -69,9 +69,13 @@ export default function Hero(props: HeroProps) {
       id="hero"
       className="bg-background text-foreground min-h-screen flex items-center relative overflow-hidden"
     >
-      {/* Animated background grid */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border))_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border))_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20" />
+      {/* Animated background with futuristic grid */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,hsl(var(--border))_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border))_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-30" />
+        {/* Floating particles */}
+        <div className="absolute top-1/4 left-1/4 w-3 h-3 bg-primary/40 rounded-full animate-ping" />
+        <div className="absolute top-3/4 right-1/3 w-2 h-2 bg-accent/50 rounded-full animate-ping delay-500" />
+        <div className="absolute bottom-1/4 left-1/3 w-2.5 h-2.5 bg-primary/30 rounded-full animate-ping delay-1000" />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -84,35 +88,37 @@ export default function Hero(props: HeroProps) {
             <div className="flex justify-start">
               <Badge
                 variant="secondary"
-                className="bg-primary/10 text-primary border-primary/20 px-4 py-2 text-sm font-medium"
+                className="bg-gradient-to-r from-primary/20 to-accent/20 text-primary border-primary/30 px-6 py-3 text-sm font-bold backdrop-blur-sm"
               >
-                <Zap className="w-4 h-4 mr-2" />
+                <Bot className="w-4 h-4 mr-2" />
                 <span data-editable="badgeText">{config.badgeText}</span>
               </Badge>
             </div>
 
             {/* Title */}
-            <div className="space-y-4">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent">
-                <span data-editable="title">{config.title}</span>
+            <div className="space-y-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight">
+                <span className="bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent">
+                  <span data-editable="title">{config.title}</span>
+                </span>
               </h1>
 
-              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl">
+              <p className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
                 <span data-editable="subtitle">{config.subtitle}</span>
               </p>
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-6">
               <Button
                 size="lg"
                 onClick={handlePrimaryClick}
                 data-editable-href="ctaHref"
                 data-href={config.ctaHref}
-                className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg font-semibold transition-all duration-300 hover:scale-105"
+                className="bg-gradient-to-r from-primary to-accent text-primary-foreground hover:from-primary/90 hover:to-accent/90 px-10 py-7 text-xl font-bold transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-primary/25"
               >
+                <Gamepad2 className="w-6 h-6 mr-3" />
                 <span data-editable="ctaText">{config.ctaText}</span>
-                <Zap className="w-5 h-5 ml-2" />
               </Button>
 
               <Button
@@ -121,30 +127,30 @@ export default function Hero(props: HeroProps) {
                 onClick={handleSecondaryClick}
                 data-editable-href="secondaryCtaHref"
                 data-href={config.secondaryCtaHref}
-                className="border-border hover:bg-accent hover:text-accent-foreground px-8 py-6 text-lg font-semibold transition-all duration-300"
+                className="border-2 border-border hover:bg-accent hover:text-accent-foreground px-10 py-7 text-xl font-bold transition-all duration-300 hover:scale-105"
               >
-                <Play className="w-5 h-5 mr-2" />
+                <Play className="w-6 h-6 mr-3" />
                 <span data-editable="secondaryCtaText">{config.secondaryCtaText}</span>
               </Button>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-8">
+            <div className="grid grid-cols-3 gap-8 pt-12">
               {config.stats.map((stat, idx) => (
                 <Card
                   key={idx}
-                  className={`bg-card/50 border-border/50 backdrop-blur-sm transition-all duration-500 hover:bg-card/80 hover:scale-105 ${
-                    currentStatIndex === idx ? 'ring-2 ring-primary/50' : ''
+                  className={`bg-card/60 border-border/60 backdrop-blur-sm transition-all duration-500 hover:bg-card/80 hover:scale-110 hover:shadow-2xl hover:shadow-primary/10 ${
+                    currentStatIndex === idx ? 'ring-2 ring-primary/60 shadow-lg shadow-primary/20' : ''
                   }`}
                 >
-                  <CardContent className="p-4 text-center">
-                    <div className="flex justify-center mb-2 text-primary">
+                  <CardContent className="p-6 text-center">
+                    <div className="flex justify-center mb-3 text-primary">
                       {getStatIcon(stat.icon)}
                     </div>
-                    <div className="text-2xl font-bold text-foreground">
+                    <div className="text-3xl font-black text-foreground mb-1">
                       <span data-editable={`stats[${idx}].value`}>{stat.value}</span>
                     </div>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-sm text-muted-foreground font-medium">
                       <span data-editable={`stats[${idx}].label`}>{stat.label}</span>
                     </div>
                   </CardContent>
@@ -158,37 +164,42 @@ export default function Hero(props: HeroProps) {
             className={`relative transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}
           >
             <div className="relative">
-              {/* Glow effect */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-3xl blur-2xl opacity-60" />
+              {/* Enhanced glow effect */}
+              <div className="absolute -inset-6 bg-gradient-to-r from-primary/30 via-accent/30 to-primary/30 rounded-3xl blur-3xl opacity-70 animate-pulse" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 via-primary/20 to-accent/20 rounded-3xl blur-2xl opacity-60" />
 
               {/* Image container */}
-              <div className="relative bg-card/30 backdrop-blur-sm rounded-2xl border border-border/50 overflow-hidden">
+              <div className="relative bg-card/40 backdrop-blur-sm rounded-3xl border-2 border-border/60 overflow-hidden shadow-2xl">
                 <Image
                   src={config.heroImageUrl}
                   alt={config.heroImageAlt}
                   data-editable-src="heroImageUrl"
                   width={800}
                   height={600}
-                  className="w-full h-auto object-cover transition-transform duration-700 hover:scale-105"
+                  className="w-full h-auto object-cover transition-transform duration-700 hover:scale-110"
                   priority
                 />
 
                 {/* Overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/30 via-transparent to-transparent" />
+                
+                {/* Floating UI elements */}
+                <div className="absolute top-6 right-6 bg-primary/90 text-primary-foreground px-4 py-2 rounded-full text-sm font-bold backdrop-blur-sm">
+                  AI Powered
+                </div>
+                <div className="absolute bottom-6 left-6 bg-accent/90 text-accent-foreground px-4 py-2 rounded-full text-sm font-bold backdrop-blur-sm">
+                  Super App
+                </div>
               </div>
 
-              {/* Floating elements */}
-              <div className="absolute -top-4 -right-4 w-20 h-20 bg-primary/20 rounded-full blur-xl animate-pulse" />
-              <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-accent/20 rounded-full blur-lg animate-pulse delay-1000" />
+              {/* Enhanced floating elements */}
+              <div className="absolute -top-6 -right-6 w-24 h-24 bg-primary/20 rounded-full blur-xl animate-pulse" />
+              <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-accent/20 rounded-full blur-lg animate-pulse delay-1000" />
+              <div className="absolute top-1/2 -right-4 w-16 h-16 bg-primary/15 rounded-full blur-lg animate-pulse delay-500" />
             </div>
           </div>
         </div>
       </div>
-
-      {/* Animated particles */}
-      <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary/30 rounded-full animate-ping" />
-      <div className="absolute top-3/4 right-1/3 w-1 h-1 bg-accent/40 rounded-full animate-ping delay-500" />
-      <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 bg-primary/20 rounded-full animate-ping delay-1000" />
     </section>
   );
 }
